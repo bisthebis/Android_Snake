@@ -30,22 +30,6 @@ SOFTWARE.
 #include <QTextStream>
 #include "gamegrid.h"
 
-static QTextStream out(stdout);
-
-void printGrid(const GameGrid& grid) {
-    static QMap<GameGrid::CELL_STATE, QChar> symbols;
-
-    symbols[GameGrid::EMPTY] = '0';
-    symbols[GameGrid::FOOD] = '#';
-    symbols[GameGrid::SNAKE] = '=';
-
-    for (int y = 0; y < grid.height; ++y) {
-        for (int x = 0; x < grid.width; ++x) {
-            out << symbols[grid.at(x, y)] << ' ';
-        }
-        out << endl;
-    }
-}
 
 int main(int argc, char *argv[])
 {
@@ -53,9 +37,12 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     GameGrid grid;
-    printGrid(grid);
 
     QQmlApplicationEngine engine;
+
+    qmlRegisterType<GameGrid>("be.martin.boris", 1, 0, "GameGrid");
+
+
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())
         return -1;

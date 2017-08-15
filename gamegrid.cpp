@@ -22,14 +22,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 #include "gamegrid.h"
+#include <QTextStream>
 
-GameGrid::GameGrid(int w, int h) : width(w), height(h)
+GameGrid::GameGrid(int w, int h) : m_width(w), m_height(h)
 {
     //Valid input : size > 3 (4x4 minimum)
     Q_ASSERT(w);
     Q_ASSERT(h);
 
-    auto gridSize = width * height;
+    auto gridSize = m_width * m_height;
     for (int i = 0; i < gridSize; ++i) {
         data.append(EMPTY);
     }
@@ -41,10 +42,10 @@ GameGrid::GameGrid(int w, int h) : width(w), height(h)
 }
 
 GameGrid::CELL_STATE GameGrid::at(int x, int y) const {
-    if (x >= width || y >= height)
+    if (x >= m_width || y >= m_height)
         return EMPTY;
 
-    int coord = x + y * width;
+    int coord = x + y * m_width;
     Q_ASSERT(coord < data.length()); //Mathematically obvious.
 
     return data.at(coord);
@@ -54,7 +55,9 @@ void GameGrid::addFood() {
     QList<int> emptyCells;
 
     //Gather all IDs of empty cells
-    for (int i = 0; i < width * height; ++i) {
+    for (int i = 0; i < m_width * m_height; ++i) {
+        if (data.at(i) == FOOD)
+            data[i] = EMPTY; //Cleanup
         if (data.at(i) == EMPTY)
             emptyCells.append(i);
     }
@@ -69,6 +72,7 @@ void GameGrid::advance(DIRECTION d) {
 
     int x = head.first;
     int y = head.second;
+
 
     switch (d) {
     case LEFT:
@@ -85,31 +89,46 @@ void GameGrid::advance(DIRECTION d) {
         break;
     }
 
+    //Check that the snake doesn't go backward (behind head)
+    auto cell = QPair<int, int>(x, y);
+    if (cell == *(snake.end() - 2)) {
+        emit failedDirectionSwitch();
+        return;
+    }
+
+    //To avoid negative modulos
+    x += m_width;
+    y += m_height;
     //World is a torus !
-    x %= width;
-    y %= height;
+    x %= m_width;
+    y %= m_height;
 
     //Where are we heading ?
     switch (at(x, y)) {
     case EMPTY:
         snake.append({x, y});
         snake.removeFirst();
+        updateGrid();
         break;
     case FOOD:
         snake.append({x, y});
+        updateGrid();
+        addFood();
         break;
     case SNAKE:
         emit lost(snake.size());
         break;
     }
+
+
 }
 
 
 void GameGrid::initSnake() {
     //The snake begins point ont the right, as an horizontal bar in the middle
     static const int INITIAL_SIZE = 4;
-    int averageHeight = height/2;
-    int startingX = (width - INITIAL_SIZE) / 2;
+    int averageHeight = m_height/2;
+    int startingX = (m_width - INITIAL_SIZE) / 2;
 
     for (int i = 0; i < INITIAL_SIZE; ++i)
     {
@@ -121,7 +140,7 @@ void GameGrid::initSnake() {
 
 void GameGrid::updateGrid() {
     //Cleaning
-    for (int i = 0; i < width * height; ++i) {
+    for (int i = 0; i < m_width * m_height; ++i) {
         data[i] = EMPTY;
     }
 
@@ -129,9 +148,30 @@ void GameGrid::updateGrid() {
     data[foodLocation] = FOOD;
 
     for (const auto& cell : snake) {
-        auto i = cell.first + cell.second * width;
+        auto i = cell.first + cell.second * m_width;
         data[i] = SNAKE;
     }
 
+    //Ensure food isn't on the snake
+    if (data.at(foodLocation) == SNAKE)
+        addFood();
+
     emit changed(-1);
+}
+
+void GameGrid::toStdOut() const {
+    static QTextStream out(stdout);
+
+    static QMap<GameGrid::CELL_STATE, QChar> symbols;
+
+    symbols[GameGrid::EMPTY] = '0';
+    symbols[GameGrid::FOOD] = 'F';
+    symbols[GameGrid::SNAKE] = '=';
+
+    for (int y = 0; y < m_height; ++y) {
+        for (int x = 0; x < m_width; ++x) {
+            out << symbols[at(x, y)] << ' ';
+        }
+        out << endl;
+    }
 }

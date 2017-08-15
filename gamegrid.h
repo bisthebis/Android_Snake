@@ -39,16 +39,31 @@ class GameGrid : public QObject
     using Snake = QLinkedList<QPair<int, int>>;
 
     Q_OBJECT
+
+    Q_PROPERTY(int width READ width)
+    Q_PROPERTY(int heigth READ heigth)
+
 public:
     GameGrid(int w = 12, int h = 8);
 
     enum CELL_STATE {EMPTY, SNAKE, FOOD};
     enum DIRECTION {LEFT, UP, RIGHT, BOTTOM};
+    Q_ENUM(CELL_STATE)
+    Q_ENUM(DIRECTION)
 
-    const int width;
-    const int height;
+    const int m_width;
+    const int m_height;
 
 public slots:
+
+    int width() const {
+        return m_width;
+    }
+
+    int heigth() const {
+        return m_height;
+    }
+
     /**
      * @brief read cell state at particular coordinates
      * @param x : absciss, such as 0 <= x < width
@@ -68,6 +83,8 @@ public slots:
      */
     void advance(DIRECTION d);
 
+    void toStdOut() const;
+
 signals:
     /**
      * @brief emitted when data changes. Parameter is the ID of the cell changed, -1 if more than one changed.
@@ -83,6 +100,11 @@ signals:
      * @brief Emitted when snake size == Grid size
      */
     void won();
+
+    /**
+     * @brief Emitted when the snake tries to go exactly behind his head
+     */
+    void failedDirectionSwitch();
 
 private:
     QList<CELL_STATE> data;
