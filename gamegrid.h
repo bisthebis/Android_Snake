@@ -25,6 +25,8 @@ SOFTWARE.
 #define GAMEGRID_H
 
 #include <QList>
+#include <QLinkedList>
+#include <QPair>
 
 /** @brief Class storing the data on a Grid.
  *
@@ -34,15 +36,17 @@ SOFTWARE.
  * */
 class GameGrid : public QObject
 {
+    using Snake = QLinkedList<QPair<int, int>>;
 
     Q_OBJECT
 public:
-    GameGrid(quint32 w = 12, quint32 h = 8);
+    GameGrid(int w = 12, int h = 8);
 
     enum CELL_STATE {EMPTY, SNAKE, FOOD};
+    enum DIRECTION {LEFT, UP, RIGHT, BOTTOM};
 
-    const quint32 width;
-    const quint32 height;
+    const int width;
+    const int height;
 
 public slots:
     /**
@@ -51,12 +55,18 @@ public slots:
      * @param y : ordinate, such as 0 <= x < heigth
      * @return state at this cell, CELL_STATE::EMPTY if out of bound.
      */
-    CELL_STATE at(quint32 x, quint32 y) const;
+    CELL_STATE at(int x, int y) const;
 
     /**
      * @brief switch an empty cell to FOOD state, randomly
      */
     void addFood();
+
+    /**
+     * @brief advance
+     * @param d : direction to move the snake.
+     */
+    void advance(DIRECTION d);
 
 signals:
     /**
@@ -64,8 +74,24 @@ signals:
      */
     void changed(int);
 
+    /**
+     * @brief Emitted when the game ends. Parameter is the snake size.
+     */
+    void lost(int);
+
+    /**
+     * @brief Emitted when snake size == Grid size
+     */
+    void won();
+
 private:
     QList<CELL_STATE> data;
+    //Linked list of cells. First is the tail, last the head
+    Snake snake;
+    int foodLocation = 0;
+
+    void initSnake();
+    void updateGrid();
 };
 
 #endif // GAMEGRID_H

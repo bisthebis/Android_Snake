@@ -23,41 +23,79 @@ SOFTWARE.
 */
 #include "gamegrid.h"
 
-GameGrid::GameGrid(quint32 w, quint32 h) : width(w), height(h)
+GameGrid::GameGrid(int w, int h) : width(w), height(h)
 {
-    //Valid input : non-null size
+    //Valid input : size > 3 (4x4 minimum)
     Q_ASSERT(w);
     Q_ASSERT(h);
 
     auto gridSize = width * height;
-    for (quint32 i = 0; i < gridSize; ++i) {
+    for (int i = 0; i < gridSize; ++i) {
         data.append(EMPTY);
     }
 
-    Q_ASSERT(quint32(data.length()) == gridSize);
+    Q_ASSERT(int(data.length()) == gridSize);
+
+    initSnake();
+    addFood();
 }
 
-GameGrid::CELL_STATE GameGrid::at(quint32 x, quint32 y) const {
+GameGrid::CELL_STATE GameGrid::at(int x, int y) const {
     if (x >= width || y >= height)
         return EMPTY;
 
-    quint32 coord = x + y * width;
-    Q_ASSERT(coord < quint32(data.length())); //Mathematically obvious.
+    int coord = x + y * width;
+    Q_ASSERT(coord < data.length()); //Mathematically obvious.
 
     return data.at(coord);
 }
 
 void GameGrid::addFood() {
-    QList<quint32> emptyCells;
+    QList<int> emptyCells;
 
     //Gather all IDs of empty cells
-    for (quint32 i = 0; i < width * height; ++i) {
+    for (int i = 0; i < width * height; ++i) {
         if (data.at(i) == EMPTY)
             emptyCells.append(i);
     }
 
-    //Pick one randomly, make it a FOOD cell, signal the change
-    int id = qrand() % emptyCells.length();
-    data[id] = FOOD;
-    emit changed(id);
+    //Pick one randomly, make it a FOOD cell
+    foodLocation = qrand() % emptyCells.length();
+    updateGrid();
+}
+
+void GameGrid::advance(DIRECTION d) {
+
+}
+
+
+void GameGrid::initSnake() {
+    //The snake begins point ont the right, as an horizontal bar in the middle
+    static const int INITIAL_SIZE = 4;
+    int averageHeight = height/2;
+    int startingX = (width - INITIAL_SIZE) / 2;
+
+    for (int i = 0; i < INITIAL_SIZE; ++i)
+    {
+        snake.append({startingX + i, averageHeight});
+    }
+
+    updateGrid();
+}
+
+void GameGrid::updateGrid() {
+    //Cleaning
+    for (int i = 0; i < width * height; ++i) {
+        data[i] = EMPTY;
+    }
+
+    //Add food and Snake locations.
+    data[foodLocation] = FOOD;
+
+    for (const auto& cell : snake) {
+        auto i = cell.first + cell.second * width;
+        data[i] = SNAKE;
+    }
+
+    emit changed(-1);
 }

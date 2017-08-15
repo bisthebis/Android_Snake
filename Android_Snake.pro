@@ -4,7 +4,7 @@ QT += qml quick
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    gamegrid.cpp
+    gamegrid.cpp \
 
 RESOURCES += qml.qrc
 
@@ -31,4 +31,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    gamegrid.h
+    gamegrid.h \
