@@ -65,7 +65,43 @@ void GameGrid::addFood() {
 }
 
 void GameGrid::advance(DIRECTION d) {
+    auto head = snake.last();
 
+    int x = head.first;
+    int y = head.second;
+
+    switch (d) {
+    case LEFT:
+        --x;
+        break;
+    case RIGHT:
+        ++x;
+        break;
+    case UP:
+        --y;
+        break;
+    case BOTTOM:
+        ++y;
+        break;
+    }
+
+    //World is a torus !
+    x %= width;
+    y %= height;
+
+    //Where are we heading ?
+    switch (at(x, y)) {
+    case EMPTY:
+        snake.append({x, y});
+        snake.removeFirst();
+        break;
+    case FOOD:
+        snake.append({x, y});
+        break;
+    case SNAKE:
+        emit lost(snake.size());
+        break;
+    }
 }
 
 
