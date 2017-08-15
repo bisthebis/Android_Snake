@@ -37,7 +37,7 @@ class GameGrid : public QObject
 
     Q_OBJECT
 public:
-    GameGrid(quint32 w = 20, quint32 h = 10);
+    GameGrid(quint32 w = 12, quint32 h = 8);
 
     enum CELL_STATE {EMPTY, SNAKE, FOOD};
 
