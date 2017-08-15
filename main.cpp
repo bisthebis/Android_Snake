@@ -39,8 +39,8 @@ void printGrid(const GameGrid& grid) {
     symbols[GameGrid::FOOD] = '#';
     symbols[GameGrid::SNAKE] = '=';
 
-    for (quint32 y = 0; y < grid.height; ++y) {
-        for (quint32 x = 0; x < grid.width; ++x) {
+    for (int y = 0; y < grid.height; ++y) {
+        for (int x = 0; x < grid.width; ++x) {
             out << symbols[grid.at(x, y)] << ' ';
         }
         out << endl;
