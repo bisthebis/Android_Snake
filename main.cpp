@@ -26,11 +26,35 @@ SOFTWARE.
 #include <QtGlobal>
 #include <QTime>
 #include <QDebug>
+#include <QMap>
+#include <QTextStream>
+#include "gamegrid.h"
+
+static QTextStream out(stdout);
+
+void printGrid(const GameGrid& grid) {
+    static QMap<GameGrid::CELL_STATE, QChar> symbols;
+
+    symbols[GameGrid::EMPTY] = '0';
+    symbols[GameGrid::FOOD] = '#';
+    symbols[GameGrid::SNAKE] = '=';
+
+    for (quint32 y = 0; y < grid.height; ++y) {
+        for (quint32 x = 0; x < grid.width; ++x) {
+            out << symbols[grid.at(x, y)] << ' ';
+        }
+        out << endl;
+    }
+}
 
 int main(int argc, char *argv[])
 {
     qsrand(QTime::currentTime().msec());
     QGuiApplication app(argc, argv);
+
+    GameGrid grid;
+    grid.addFood();
+    printGrid(grid);
 
     QQmlApplicationEngine engine;
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
