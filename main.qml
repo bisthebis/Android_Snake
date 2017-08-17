@@ -4,27 +4,13 @@ import QtQuick.Controls 2.1
 import QtQuick.Dialogs 1.2
 
 import be.martin.boris 1.0
+import "./res"
 
 Window {
     visible: true
     width: 640
     height: 480
     title: qsTr("Hello World")
-
-    MouseArea {
-        anchors.fill: parent
-        onClicked: {
-            console.log(qsTr('Clicked on background. Text: "' + textEdit.text + '"'))
-        }
-    }
-
-    MessageDialog {
-        id: lost
-        text: "You lost !"
-        onAccepted: {
-                Qt.quit()
-            }
-    }
 
     GameGrid {
         id: grid
@@ -33,6 +19,7 @@ Window {
     }
 
     Column {
+        visible: false
         Button {
             id: show
             text: qsTr("Print game to stdout")
@@ -77,18 +64,16 @@ Window {
         }
     }
 
-    TextEdit {
-        id: textEdit
-        text: qsTr("Enter some text...")
-        verticalAlignment: Text.AlignVCenter
-        anchors.top: parent.top
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.topMargin: 20
-        Rectangle {
-            anchors.fill: parent
-            anchors.margins: -10
-            color: "transparent"
-            border.width: 1
-        }
+    Slider {
+        id: size
+        from: 1
+        to: 20
+        value: 12
     }
+
+    BackgroundArray {
+        cell_width: size.value
+        cell_height: cell_height
+    }
+
 }
