@@ -11,23 +11,16 @@ Item {
 
     anchors.centerIn: parent
 
-
-    Column {
+    Grid {
+        columns: array_width
         Repeater {
-            model: array_height
-
-            Row {
-
-                Repeater {
-                    model: array_width
-                    Rectangle {
-                        id: cell
-                        color: "#25e617"
-                        border.color: "black"
-                        width: cell_width
-                        height: cell_width
-                    }
-                }
+            model: array_width * array_height
+            Rectangle {
+                id: cell
+                color: "#25e617"
+                border.color: "black"
+                width: cell_width
+                height: cell_width
             }
         }
     }
