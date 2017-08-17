@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>res/BackgroundArray.qml</file>
+        <file>res/snake_head.png</file>
     </qresource>
 </RCC>
