@@ -67,11 +67,12 @@ Window {
     Slider {
         id: size
         from: 1
-        to: 20
+        to: 32
         value: 12
     }
 
     BackgroundArray {
+        anchors.centerIn: parent
         cell_width: size.value
         cell_height: cell_height
     }
