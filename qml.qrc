@@ -3,5 +3,6 @@
         <file>main.qml</file>
         <file>res/BackgroundArray.qml</file>
         <file>res/snake_head.png</file>
+        <file>res/snake_part.png</file>
     </qresource>
 </RCC>
