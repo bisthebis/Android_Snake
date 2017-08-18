@@ -64,7 +64,7 @@ Item {
                             name: "head"
                             PropertyChanges {
                                 target: tile
-                                source: "qrc:/res/snake_head.png"
+                                source: "qrc:/res/snake_head_up.png"
                                 visible: true
                             }
                         }
@@ -110,7 +110,7 @@ Item {
         //Put head
         var headPos = game.headPos();
         grid.children[headPos].state = "head"
-        console.log(headPos)
+        console.log("Headpos is : " + headPos)
     }
 
 

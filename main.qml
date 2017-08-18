@@ -11,6 +11,7 @@ Window {
     width: 640
     height: 480
     title: qsTr("Hello World")
+    Component.onCompleted: console.log(width + "x" + height)
 
     GameGrid {
         id: grid
