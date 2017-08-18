@@ -72,9 +72,11 @@ Window {
     }
 
     BackgroundArray {
+        id: bg_array
         anchors.centerIn: parent
         cell_width: size.value
         cell_height: cell_height
+        Component.onCompleted: bg_array.draw(grid)
     }
 
 }

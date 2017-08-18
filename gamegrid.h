@@ -65,6 +65,15 @@ public slots:
     }
 
     /**
+     * @brief headPos
+     * @return the ID (x + y*w) of the cell containing snake's head
+     */
+    int headPos() const {
+        auto& head = snake.last();
+        return head.first + m_width * head.second;
+    }
+
+    /**
      * @brief read cell state at particular coordinates
      * @param x : absciss, such as 0 <= x < width
      * @param y : ordinate, such as 0 <= x < heigth

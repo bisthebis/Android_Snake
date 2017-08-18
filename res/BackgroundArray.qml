@@ -1,5 +1,6 @@
 import QtQuick 2.0
 
+import be.martin.boris 1.0
 
 Item {
 
@@ -58,6 +59,14 @@ Item {
                                 source: "qrc:/res/snake_part.png"
                                 visible: true
                             }
+                        },
+                        State {
+                            name: "head"
+                            PropertyChanges {
+                                target: tile
+                                source: "qrc:/res/snake_head.png"
+                                visible: true
+                            }
                         }
 
                     ]
@@ -75,14 +84,34 @@ Item {
             return grid.children[key]
         }
 
-        Component.onCompleted: {
-            console.log("Hi")
-            getElement(0,0).state = "snake"
-            getElement(4,7).state = "food"
-        }
+
 
     }
 
+
+    function draw(game) {
+        for (var y = 0; y < array_height; y++) {
+            for (var x = 0; x < array_width; x++) {
+                var type = game.at(x,y);
+
+                if (type === GameGrid.EMPTY) {
+                    grid.getElement(x,y).state = "empty"
+                }
+                else if (type === GameGrid.SNAKE) {
+                    grid.getElement(x,y).state = "snake"
+                }
+                else if (type === GameGrid.FOOD) {
+                    grid.getElement(x,y).state = "food"
+                }
+            }
+
+        }
+
+        //Put head
+        var headPos = game.headPos();
+        grid.children[headPos].state = "head"
+        console.log(headPos)
+    }
 
 
 
