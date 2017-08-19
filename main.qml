@@ -27,7 +27,7 @@ Window {
     }
 
     Timer {
-       interval: 250
+       interval: 1000 / speed.value
        repeat: true
        onTriggered: grid.advance(grid.lastDirection)
        running: true
@@ -80,16 +80,16 @@ Window {
     }
 
     Slider {
-        id: size
+        id: speed
         from: 1
-        to: 32
-        value: 12
+        to: 20
+        value: 5
     }
 
     BackgroundArray {
         id: bg_array
         anchors.centerIn: parent
-        cell_width: size.value
+        cell_width: 32
         cell_height: cell_height
         Component.onCompleted: bg_array.draw(grid)
     }
