@@ -8,5 +8,6 @@
         <file>res/snake_head_down.png</file>
         <file>res/snake_head_left.png</file>
         <file>res/snake_head_right.png</file>
+        <file>res/SwipableArea.qml</file>
     </qresource>
 </RCC>

@@ -13,6 +13,11 @@ Window {
     title: qsTr("Hello World")
     Component.onCompleted: console.log(width + "x" + height)
 
+    SwipableArea {
+        onSwipeDone: grid.advance(direction)
+    }
+
+
     GameGrid {
         id: grid
         onLost: Qt.quit()
