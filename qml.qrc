@@ -5,5 +5,8 @@
         <file>res/snake_head_up.png</file>
         <file>res/snake_part.png</file>
         <file>res/food.png</file>
+        <file>res/snake_head_down.png</file>
+        <file>res/snake_head_left.png</file>
+        <file>res/snake_head_right.png</file>
     </qresource>
 </RCC>
