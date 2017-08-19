@@ -14,7 +14,7 @@ Item {
     anchors.horizontalCenterOffset: - array_width * cell_width / 2
     anchors.verticalCenterOffset: - array_height * cell_height / 2
 
-    property string snake_source_according_to_direction: "qrc:/res/snake_head_left.png"
+    property string snake_source_according_to_direction: "qrc:/res/snake_head_right.png"
 
     Grid {
         id: grid
