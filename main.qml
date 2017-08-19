@@ -14,7 +14,7 @@ Window {
     Component.onCompleted: console.log(width + "x" + height)
 
     SwipableArea {
-        onSwipeDone: grid.advance(direction)
+        onSwipeDone: grid.setDirection(direction)
     }
 
 
@@ -22,12 +22,19 @@ Window {
         id: grid
         onLost: Qt.quit()
         onFailedDirectionSwitch: console.log("Failed to go backwards")
-        onLastDirectionChanged: bg_array.updateDirection(direction)
+        //onLastDirectionChanged: bg_array.updateDirection(direction) //Update done on schedule now
         onChanged: bg_array.draw(this)
     }
 
+    Timer {
+       interval: 250
+       repeat: true
+       onTriggered: grid.advance(grid.lastDirection)
+       running: true
+    }
+
     Column {
-        visible: true
+        visible: false
         Button {
             id: show
             text: qsTr("Print game to stdout")

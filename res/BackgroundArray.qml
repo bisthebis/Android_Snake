@@ -113,6 +113,9 @@ Item {
         var headPos = game.headPos();
         grid.children[headPos].state = "head"
         console.log("Headpos is : " + headPos)
+
+        //Update head direction
+        updateDirection(game.lastDirection)
     }
 
     function updateDirection(dir) {

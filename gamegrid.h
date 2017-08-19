@@ -42,8 +42,7 @@ class GameGrid : public QObject
 
     Q_PROPERTY(int width READ width)
     Q_PROPERTY(int heigth READ heigth)
-    Q_PROPERTY(DIRECTION lastDirection READ lastDirection() NOTIFY lastDirectionChanged)
-
+    Q_PROPERTY(DIRECTION lastDirection READ lastDirection WRITE setDirection NOTIFY lastDirectionChanged)
 public:
     GameGrid(int w = 12, int h = 8);
 
@@ -59,6 +58,11 @@ public slots:
 
     DIRECTION lastDirection() const {
         return m_lastDirection;
+    }
+
+    void setDirection(DIRECTION direction) {
+        m_lastDirection = direction;
+        emit lastDirectionChanged(direction);
     }
 
     int width() const {
