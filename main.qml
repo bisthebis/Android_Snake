@@ -15,12 +15,14 @@ Window {
 
     GameGrid {
         id: grid
-        onLost: lost.visible = true
+        onLost: Qt.quit()
         onFailedDirectionSwitch: console.log("Failed to go backwards")
+        onLastDirectionChanged: bg_array.updateDirection(direction)
+        onChanged: bg_array.draw(this)
     }
 
     Column {
-        visible: false
+        visible: true
         Button {
             id: show
             text: qsTr("Print game to stdout")

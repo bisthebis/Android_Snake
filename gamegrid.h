@@ -42,6 +42,7 @@ class GameGrid : public QObject
 
     Q_PROPERTY(int width READ width)
     Q_PROPERTY(int heigth READ heigth)
+    Q_PROPERTY(DIRECTION lastDirection READ lastDirection() NOTIFY lastDirectionChanged)
 
 public:
     GameGrid(int w = 12, int h = 8);
@@ -55,6 +56,10 @@ public:
     const int m_height;
 
 public slots:
+
+    DIRECTION lastDirection() const {
+        return m_lastDirection;
+    }
 
     int width() const {
         return m_width;
@@ -115,11 +120,18 @@ signals:
      */
     void failedDirectionSwitch();
 
+    /**
+     * @brief emitted when the direction of the last move changes.
+     * @param dir : new direction
+     */
+    void lastDirectionChanged(DIRECTION direction);
+
 private:
     QList<CELL_STATE> data;
     //Linked list of cells. First is the tail, last the head
     Snake snake;
     int foodLocation = 0;
+    DIRECTION m_lastDirection = RIGHT;
 
     void initSnake();
     void updateGrid();

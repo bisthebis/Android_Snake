@@ -14,6 +14,8 @@ Item {
     anchors.horizontalCenterOffset: - array_width * cell_width / 2
     anchors.verticalCenterOffset: - array_height * cell_height / 2
 
+    property string snake_source_according_to_direction: "qrc:/res/snake_head_left.png"
+
     Grid {
         id: grid
         columns: array_width
@@ -64,7 +66,7 @@ Item {
                             name: "head"
                             PropertyChanges {
                                 target: tile
-                                source: "qrc:/res/snake_head_up.png"
+                                source: snake_source_according_to_direction
                                 visible: true
                             }
                         }
@@ -111,6 +113,25 @@ Item {
         var headPos = game.headPos();
         grid.children[headPos].state = "head"
         console.log("Headpos is : " + headPos)
+    }
+
+    function updateDirection(dir) {
+        switch (dir) {
+        case GameGrid.LEFT:
+            snake_source_according_to_direction = "qrc:/res/snake_head_left.png"
+            break;
+        case GameGrid.RIGHT:
+            snake_source_according_to_direction = "qrc:/res/snake_head_right.png"
+            break;
+        case GameGrid.UP:
+            snake_source_according_to_direction = "qrc:/res/snake_head_up.png"
+            break;
+        case GameGrid.BOTTOM:
+            snake_source_according_to_direction = "qrc:/res/snake_head_down.png"
+            break;
+        default:
+            break;
+        }
     }
 
 

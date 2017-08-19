@@ -120,6 +120,11 @@ void GameGrid::advance(DIRECTION d) {
         break;
     }
 
+    if (d != m_lastDirection) {
+        m_lastDirection = d;
+        emit lastDirectionChanged(d);
+    }
+
 
 }
 
