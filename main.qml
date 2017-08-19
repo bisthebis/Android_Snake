@@ -11,7 +11,16 @@ Window {
     width: 640
     height: 480
     title: qsTr("Hello World")
-    Component.onCompleted: console.log(width + "x" + height)
+    onWidthChanged: updateCellSize();
+    onHeightChanged: updateCellSize();
+
+    function updateCellSize() {
+        var maxWidth = 0.8 * width / grid.width
+        var maxHeight = 0.8 * height / grid.heigth
+        cellSize = Math.max(Math.min(maxWidth, maxHeight), 8)
+    }
+
+    property int cellSize: 32
 
     SwipableArea {
         onSwipeDone: grid.setDirection(direction)
@@ -89,7 +98,7 @@ Window {
     BackgroundArray {
         id: bg_array
         anchors.centerIn: parent
-        cell_width: 32
+        cell_width: cellSize
         cell_height: cell_height
         Component.onCompleted: bg_array.draw(grid)
     }
