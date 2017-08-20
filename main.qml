@@ -8,6 +8,7 @@ import be.martin.boris 1.0
 import "./res"
 
 Window {
+    id: window
     visible: true
     width: 640
     height: 480
@@ -104,8 +105,12 @@ Window {
 
     //Options dialog
     OptionsDialog {
+        anchors.fill: parent
         id: options
-        onVisibilityChanged: timer.stop()
+        onVisibleChanged: {
+            timer.stop()
+            keyboard_input.forceActiveFocus()
+        }
     }
 
 
