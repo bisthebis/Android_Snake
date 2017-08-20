@@ -17,6 +17,19 @@ Window {
 
     Component.onCompleted: timer.start()
 
+    Item {
+        id: keyboard_input
+        focus: true
+
+        //Android specific
+        Keys.onReleased: {
+            if (event.key === Qt.Key_Back || event.key === Qt.Key_Backspace) {
+                console.log("No return allowed !")
+                event.accepted = true
+            }
+        }
+    }
+
     function updateCellSize() {
         var maxWidth = 0.8 * width / grid.width
         var maxHeight = 0.8 * height / grid.heigth
