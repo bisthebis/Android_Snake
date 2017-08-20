@@ -11,12 +11,11 @@ Item {
     property int cell_height: 12
 
     anchors.centerIn: parent
-    anchors.horizontalCenterOffset: - array_width * cell_width / 2
-    anchors.verticalCenterOffset: - array_height * cell_height / 2
 
     property string snake_source_according_to_direction: "qrc:/res/snake_head_right.png"
 
     Grid {
+        anchors.centerIn: parent
         id: grid
         columns: array_width
         Repeater {

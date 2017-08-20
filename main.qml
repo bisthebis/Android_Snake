@@ -20,6 +20,7 @@ Window {
         cellSize = Math.max(Math.min(maxWidth, maxHeight), 8)
     }
 
+
     property int cellSize: 32
 
     SwipableArea {
