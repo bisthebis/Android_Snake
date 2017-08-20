@@ -71,6 +71,10 @@ Window {
         }
 
         Button {
+            text: qsTr("Restart")
+        }
+
+        Button {
             text: qsTr("Options")
         }
     }
