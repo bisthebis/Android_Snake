@@ -116,8 +116,14 @@ void GameGrid::advance(DIRECTION d) {
         addFood();
         emit snakeSizeChanged();
         break;
-    case SNAKE:
-        emit lost(snake.size());
+    case SNAKE://Check it's not the tail : it's gonna be gone, so it's okay
+        if (snake.first() == QPair<int, int>(x, y)) {
+            snake.removeFirst();
+            snake.append({x, y});
+            updateGrid();
+        }
+        else
+            emit lost(snake.size());
         break;
     }
 
