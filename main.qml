@@ -58,20 +58,32 @@ Window {
         Component.onCompleted: bg_array.draw(grid)
     }
 
+
+
     RowLayout {
-
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 5
+        anchors.left: parent.left
+        anchors.leftMargin: 5
         Button {
-            text: "Pause"
+            text: qsTr("Pause")
+            onClicked: timer.running = !timer.running
         }
 
         Button {
-            text: "Options"
-        }
-
-        Label {
-            text: "Score : " + "TODO"
+            text: qsTr("Options")
         }
     }
+
+
+    Label {
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 5
+        anchors.right: parent.right
+        anchors.rightMargin: 5
+        text: "Score : " + "TODO"
+    }
+
 
 
 
