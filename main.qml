@@ -25,7 +25,7 @@ Window {
 
 
     property int cellSize: 32
-    property int speed: 5 //Cells per second
+    property int speed: options.speed //Cells per second
 
     SwipableArea {
         onSwipeDone: grid.setDirection(direction)
@@ -66,7 +66,7 @@ Window {
         anchors.left: parent.left
         anchors.leftMargin: 5
         Button {
-            text: qsTr("Pause")
+            text: timer.running ? qsTr("Pause") : qsTr("Unpause")
             onClicked: timer.running = !timer.running
         }
 
@@ -76,6 +76,7 @@ Window {
 
         Button {
             text: qsTr("Options")
+            onClicked: options.visible = true;
         }
     }
 
@@ -88,6 +89,11 @@ Window {
         text: "Score : " + 6 * grid.snakeSize
     }
 
+    //Options dialog
+    OptionsDialog {
+        id: options
+        onVisibilityChanged: timer.stop()
+    }
 
 
 
