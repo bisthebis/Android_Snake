@@ -31,7 +31,6 @@ Window {
         id: grid
         onLost: Qt.quit()
         onFailedDirectionSwitch: console.log("Failed to go backwards")
-        //onLastDirectionChanged: bg_array.updateDirection(direction) //Update done on schedule now
         onChanged: bg_array.draw(this)
     }
 
@@ -40,52 +39,6 @@ Window {
        repeat: true
        onTriggered: grid.advance(grid.lastDirection)
        running: true
-    }
-
-    Column {
-        visible: false
-        Button {
-            id: show
-            text: qsTr("Print game to stdout")
-            onClicked: grid.toStdOut()
-        }
-
-        Button {
-            id: left
-            text: "Left"
-            onClicked: {
-                grid.advance(GameGrid.LEFT)
-                console.log("Left")
-                grid.toStdOut()
-            }
-        }
-        Button {
-            id: right
-            text: "Right"
-            onClicked: {
-                grid.advance(GameGrid.RIGHT)
-                console.log("Right")
-                grid.toStdOut()
-            }
-        }
-        Button {
-            id: up
-            text: "Up"
-            onClicked: {
-                grid.advance(GameGrid.UP)
-                console.log("Up")
-                grid.toStdOut()
-            }
-        }
-        Button {
-            id: down
-            text: "Bottom"
-            onClicked: {
-                grid.advance(GameGrid.BOTTOM)
-                console.log("Bottom")
-                grid.toStdOut()
-            }
-        }
     }
 
     Slider {
