@@ -61,6 +61,11 @@ public slots:
     }
 
     void setDirection(DIRECTION direction) {
+        //Prevent going backwards
+        if (opposite(direction) == m_lastDirection) {
+            emit failedDirectionSwitch();
+            return;
+        }
         m_lastDirection = direction;
         emit lastDirectionChanged(direction);
     }
@@ -139,6 +144,24 @@ private:
 
     void initSnake();
     void updateGrid();
+
+    static DIRECTION opposite(DIRECTION d) {
+        switch (d) {
+        case BOTTOM:
+            return UP;
+            break;
+        case UP:
+            return BOTTOM;
+            break;
+        case LEFT:
+            return RIGHT;
+            break;
+        case RIGHT:
+        default:
+            return LEFT;
+            break;
+        }
+    }
 };
 
 #endif // GAMEGRID_H
