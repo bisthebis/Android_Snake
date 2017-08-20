@@ -114,6 +114,7 @@ void GameGrid::advance(DIRECTION d) {
         snake.append({x, y});
         updateGrid();
         addFood();
+        emit snakeSizeChanged();
         break;
     case SNAKE:
         emit lost(snake.size());

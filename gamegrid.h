@@ -43,6 +43,7 @@ class GameGrid : public QObject
     Q_PROPERTY(int width READ width)
     Q_PROPERTY(int heigth READ heigth)
     Q_PROPERTY(DIRECTION lastDirection READ lastDirection WRITE setDirection NOTIFY lastDirectionChanged)
+    Q_PROPERTY(int snakeSize READ snakeSize NOTIFY snakeSizeChanged)
 public:
     GameGrid(int w = 12, int h = 8);
 
@@ -55,6 +56,10 @@ public:
     const int m_height;
 
 public slots:
+
+    int snakeSize() const {
+        return snake.size();
+    }
 
     DIRECTION lastDirection() const {
         return m_lastDirection;
@@ -134,6 +139,11 @@ signals:
      * @param dir : new direction
      */
     void lastDirectionChanged(DIRECTION direction);
+
+    /**
+     * @brief Every time a food is eaten
+     */
+    void snakeSizeChanged();
 
 private:
     QList<CELL_STATE> data;
