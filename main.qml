@@ -105,7 +105,7 @@ Window {
         anchors.bottomMargin: 5
         anchors.right: parent.right
         anchors.rightMargin: 5
-        text: "Score : " + score
+        text: "Score : " + score + "\nHighscore : " + game_data.highscore
     }
 
     //Options dialog
