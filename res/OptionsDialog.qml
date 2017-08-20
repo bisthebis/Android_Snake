@@ -29,10 +29,6 @@ Window {
                 text: qsTr("Size : ")
             }
         }
-
-        Button {
-            text: qsTr("Restart game")
-        }
     }
 
 
