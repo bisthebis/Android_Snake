@@ -21,36 +21,39 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-#include <QGuiApplication>
-#include <QQmlApplicationEngine>
-#include <QtGlobal>
-#include <QTime>
-#include <QDebug>
-#include <QMap>
-#include <QTextStream>
-#include <QQmlContext>
-#include "gamegrid.h"
-#include "gamedata.h"
+#ifndef GAMEDATA_H
+#define GAMEDATA_H
 
+#include <QObject>
 
-int main(int argc, char *argv[])
+class GameData : public QObject
 {
-    qsrand(QTime::currentTime().msec());
-    QGuiApplication app(argc, argv);
+    Q_OBJECT
+    Q_PROPERTY(int highscore READ highscore WRITE setHighscore NOTIFY highscoreChanged)
+    Q_PROPERTY(int lastSpeed READ lastSpeed WRITE setLastSpeed NOTIFY lastSpeedChanged)
+public:
+    explicit GameData(QObject *parent = nullptr);
 
-    QQmlApplicationEngine engine;
+signals:
+    void highscoreChanged();
+    void lastSpeedChanged();
+public slots:
+    void doSave();
+    int highscore() const {return m_highscore;}
+    int lastSpeed() const {return m_lastSpeed;}
+    void setHighscore(int score) {
+        m_highscore = score;
+        emit highscoreChanged();
+    }
+    void setLastSpeed(int speed) {
+        m_lastSpeed = speed;
+        emit lastSpeedChanged();
+    }
 
-    qmlRegisterType<GameGrid>("be.martin.boris", 1, 0, "GameGrid");
-    qmlRegisterType<GameData>("be.martin.boris", 1, 0, "GameData");
+private:
+    int m_highscore = 0;
+    int m_lastSpeed = 5;
 
-    //Register data
-    GameData data;
-    engine.rootContext()->setContextProperty("game_data", &data);
+};
 
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-
-    if (engine.rootObjects().isEmpty())
-        return -1;
-
-    return app.exec();
-}
+#endif // GAMEDATA_H

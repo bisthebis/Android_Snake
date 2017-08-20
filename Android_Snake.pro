@@ -5,6 +5,7 @@ CONFIG += c++11
 
 SOURCES += main.cpp \
     gamegrid.cpp \
+    gamedata.cpp
 
 RESOURCES += qml.qrc
 
@@ -32,3 +33,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     gamegrid.h \
+    gamedata.h

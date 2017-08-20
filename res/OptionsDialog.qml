@@ -6,7 +6,7 @@ import QtQuick.Controls 2.1
 Rectangle {
     anchors.fill: parent
     id: rect
-    property int speed: speed_slider.value
+    property int speed: speed_spinbox.value
 
     visible: false
     focus: visible //Get focus only when options are shown
@@ -25,14 +25,14 @@ Rectangle {
                 text: qsTr("Speed : ")
             }
 
-            Slider {
-                id: speed_slider
-                snapMode: Slider.SnapAlways
+            SpinBox {
+                id: speed_spinbox
                 from: 1
                 to: 10
-                value: 5
-                stepSize: 1
-                onValueChanged: console.log("New speed : " + value)
+
+                onValueChanged: game_data.setLastSpeed(value)
+                Component.onCompleted: value = game_data.lastSpeed
+
             }
         }
 

@@ -16,7 +16,12 @@ Window {
     onWidthChanged: updateCellSize();
     onHeightChanged: updateCellSize();
 
-    Component.onCompleted: timer.start()
+    Component.onCompleted: {
+        timer.start()
+    }
+
+
+    onScoreChanged: game_data.setHighscore(Math.max(score, game_data.highscore))
 
     Item {
         id: keyboard_input
@@ -39,7 +44,7 @@ Window {
 
 
     property int cellSize: 32
-    property int speed: options.speed //Cells per second
+    property int score: 6 * grid.snakeSize
 
     SwipableArea {
         onSwipeDone: grid.setDirection(direction)
@@ -56,7 +61,7 @@ Window {
     //Game control
     Timer {
        id: timer
-       interval: 1000 / speed
+       interval: 1000 / Math.floor(options.speed)
        repeat: true
        onTriggered: grid.advance(grid.lastDirection)
        running: false
@@ -100,13 +105,16 @@ Window {
         anchors.bottomMargin: 5
         anchors.right: parent.right
         anchors.rightMargin: 5
-        text: "Score : " + 6 * grid.snakeSize
+        text: "Score : " + score
     }
 
     //Options dialog
     OptionsDialog {
         anchors.fill: parent
         id: options
+
+
+
         onVisibleChanged: {
             timer.stop()
             keyboard_input.forceActiveFocus()
