@@ -10,5 +10,6 @@
         <file>res/snake_head_right.png</file>
         <file>res/SwipableArea.qml</file>
         <file>res/OptionsDialog.qml</file>
+        <file>res/GameUI.qml</file>
     </qresource>
 </RCC>
