@@ -16,9 +16,6 @@ Window {
     onWidthChanged: updateCellSize();
     onHeightChanged: updateCellSize();
 
-    Component.onCompleted: {
-        timer.start()
-    }
 
 
     onScoreChanged: game_data.setHighscore(Math.max(score, game_data.highscore))
@@ -75,6 +72,16 @@ Window {
         id: ui
         anchors.fill: parent
         gameReference: game
+        visible: !launchButton.visible
+        onVisibleChanged: if (visible) timer.start()
+    }
+
+    Button {
+        anchors.centerIn: parent
+        id: launchButton
+        text: "Launch"
+        visible: true
+        onClicked: visible = false;
     }
 
     //Options dialog
