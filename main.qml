@@ -55,6 +55,11 @@ Window {
         id: game
         onLost: Qt.quit()
         onFailedDirectionSwitch: console.log("Failed to go backwards")
+        property bool gameRunning: timer.running
+        property int cellSize: window.cellSize
+        onChanged: {
+            ui.gameArray.draw(this)
+        }
     }
 
     //Game control
@@ -67,6 +72,8 @@ Window {
     }
 
     GameUI {
+        id: ui
+        anchors.fill: parent
         gameReference: game
     }
 

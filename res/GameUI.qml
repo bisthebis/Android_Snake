@@ -5,16 +5,20 @@ import QtQuick.Controls 2.1
 Item {
 
     property var gameReference: null
+    property alias gameArray: gameArray_internal
+    property int cellSize: gameReference.cellSize | 32
 
-    onGameReferenceChanged: gameArray.draw(gameReference)
 
     //Game widget
     BackgroundArray {
         anchors.centerIn: parent
-        id: gameArray
+        id: gameArray_internal
         cell_width: cellSize
         cell_height: cell_height
-        Component.onCompleted: gameArray.draw(gameReference)
+        /*Component.onCompleted: {
+            console.assert(gameReference !== null)
+            gameArray.draw(gameReference)
+        }*/
     }
 
 
