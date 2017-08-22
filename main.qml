@@ -14,6 +14,8 @@ Window {
     height: 480
     title: qsTr("Snake")
 
+    color: "lightgreen"
+
 
     property int cellSize: 32
     property int score: 6 * game.snakeSize
@@ -52,7 +54,7 @@ Window {
     //Game data
     GameGrid {
         id: game
-        onLost: Qt.quit()
+        onLost: menu.visible = true //Go back to menu
         onFailedDirectionSwitch: console.log("Failed to go backwards")
         property bool gameRunning: timer.running
         property int cellSize: window.cellSize
@@ -75,19 +77,14 @@ Window {
         id: ui
         anchors.fill: parent
         gameReference: game
-        visible: !launchButton.visible
+        visible: !menu.visible
         onVisibleChanged: if (visible) timer.start()
     }
 
-    Button {
-        anchors.centerIn: parent
-        id: launchButton
-        text: "Launch"
+    MainMenu {
+        id: menu
+        gameReference: game
         visible: true
-        onClicked: {
-            game.newGame()
-            visible = false;
-        }
     }
 
     //Options dialog

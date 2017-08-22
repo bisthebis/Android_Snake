@@ -11,5 +11,6 @@
         <file>res/SwipableArea.qml</file>
         <file>res/OptionsDialog.qml</file>
         <file>res/GameUI.qml</file>
+        <file>res/MainMenu.qml</file>
     </qresource>
 </RCC>
