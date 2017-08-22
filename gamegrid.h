@@ -56,6 +56,8 @@ public:
     int m_height;
 
 public slots:
+    void newGame();
+
     void setWidth(int w) {
         m_width = w;
         emit widthChanged(w);
@@ -165,7 +167,7 @@ private:
     int foodLocation = 0;
     DIRECTION m_lastDirection = RIGHT;
 
-    void newGame();
+
     void initSnake();
     void updateGrid();
 

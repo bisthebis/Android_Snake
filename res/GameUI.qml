@@ -36,7 +36,7 @@ Item {
 
         Button {
             text: qsTr("Restart")
-            onClicked: gameReference.width += 1 //Strange way to restart :D Should be tmp
+            onClicked: gameReference.newGame()
         }
 
         Button {

@@ -84,7 +84,10 @@ Window {
         id: launchButton
         text: "Launch"
         visible: true
-        onClicked: visible = false;
+        onClicked: {
+            game.newGame()
+            visible = false;
+        }
     }
 
     //Options dialog
