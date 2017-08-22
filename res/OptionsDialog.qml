@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.1
 import QtQuick.Window 2.2
 import QtQuick.Controls 2.1
 
-Rectangle {
+Item {
     anchors.fill: parent
     id: rect
     property int speed: speed_spinbox.value
@@ -19,8 +19,11 @@ Rectangle {
     }
 
     ColumnLayout {
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
 
         RowLayout {
+            anchors.horizontalCenter: parent.horizontalCenter
             Label {
                 text: qsTr("Speed : ")
             }

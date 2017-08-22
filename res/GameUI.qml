@@ -41,7 +41,7 @@ Item {
 
         Button {
             text: qsTr("Options")
-            onClicked: options.visible = true;
+            onClicked: options.visible = !options.visible;
         }
     }
 
