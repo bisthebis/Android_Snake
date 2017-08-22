@@ -163,6 +163,8 @@ void GameGrid::initSnake() {
     }
 
     updateGrid();
+
+    emit snakeSizeChanged();
 }
 
 void GameGrid::updateGrid() {
