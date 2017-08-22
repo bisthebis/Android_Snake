@@ -41,7 +41,7 @@ class GameGrid : public QObject
     Q_OBJECT
 
     Q_PROPERTY(int width READ width WRITE setWidth NOTIFY widthChanged)
-    Q_PROPERTY(int heigth READ heigth WRITE setHeight NOTIFY heightChanged)
+    Q_PROPERTY(int height READ height WRITE setHeight NOTIFY heightChanged)
     Q_PROPERTY(DIRECTION lastDirection READ lastDirection WRITE setDirection NOTIFY lastDirectionChanged)
     Q_PROPERTY(int snakeSize READ snakeSize NOTIFY snakeSizeChanged)
 public:
@@ -88,7 +88,7 @@ public slots:
         return m_width;
     }
 
-    int heigth() const {
+    int height() const {
         return m_height;
     }
 
