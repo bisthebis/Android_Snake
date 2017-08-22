@@ -40,8 +40,8 @@ class GameGrid : public QObject
 
     Q_OBJECT
 
-    Q_PROPERTY(int width READ width)
-    Q_PROPERTY(int heigth READ heigth)
+    Q_PROPERTY(int width READ width WRITE setWidth NOTIFY widthChanged)
+    Q_PROPERTY(int heigth READ heigth WRITE setHeight NOTIFY heightChanged)
     Q_PROPERTY(DIRECTION lastDirection READ lastDirection WRITE setDirection NOTIFY lastDirectionChanged)
     Q_PROPERTY(int snakeSize READ snakeSize NOTIFY snakeSizeChanged)
 public:
@@ -52,10 +52,19 @@ public:
     Q_ENUM(CELL_STATE)
     Q_ENUM(DIRECTION)
 
-    const int m_width;
-    const int m_height;
+    int m_width;
+    int m_height;
 
 public slots:
+    void setWidth(int w) {
+        m_width = w;
+        emit widthChanged(w);
+    }
+
+    void setHeight(int h) {
+        m_height = h;
+        emit heightChanged(h);
+    }
 
     int snakeSize() const {
         return snake.size();
@@ -114,6 +123,9 @@ public slots:
     void toStdOut() const;
 
 signals:
+    void widthChanged(int width);
+    void heightChanged(int height);
+
     /**
      * @brief emitted when data changes. Parameter is the ID of the cell changed, -1 if more than one changed.
      */
