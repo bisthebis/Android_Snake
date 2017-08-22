@@ -164,6 +164,7 @@ private:
     int foodLocation = 0;
     DIRECTION m_lastDirection = RIGHT;
 
+    void newGame();
     void initSnake();
     void updateGrid();
 

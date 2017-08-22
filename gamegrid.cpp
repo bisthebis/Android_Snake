@@ -26,9 +26,19 @@ SOFTWARE.
 
 GameGrid::GameGrid(int w, int h) : m_width(w), m_height(h)
 {
+    newGame();
+
+    connect(this, &GameGrid::widthChanged, [this](){this->newGame();});
+    connect(this, &GameGrid::heightChanged, [this](){this->newGame();});
+}
+
+void GameGrid::newGame() {
     //Valid input : size > 3 (4x4 minimum)
-    Q_ASSERT(w);
-    Q_ASSERT(h);
+    Q_ASSERT(m_width);
+    Q_ASSERT(m_height);
+
+    //cleanup
+    data.clear();
 
     auto gridSize = m_width * m_height;
     for (int i = 0; i < gridSize; ++i) {
@@ -137,6 +147,9 @@ void GameGrid::advance(DIRECTION d) {
 
 
 void GameGrid::initSnake() {
+    //Cleanup
+    snake.clear();
+
     //The snake begins point ont the right, as an horizontal bar in the middle
     static const int INITIAL_SIZE = 4;
     int averageHeight = m_height/2;

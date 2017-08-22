@@ -15,10 +15,6 @@ Item {
         id: gameArray_internal
         cell_width: cellSize
         cell_height: cell_height
-        /*Component.onCompleted: {
-            console.assert(gameReference !== null)
-            gameArray.draw(gameReference)
-        }*/
     }
 
 
@@ -35,6 +31,7 @@ Item {
 
         Button {
             text: qsTr("Restart")
+            onClicked: gameReference.width += 0 //Strange way to restart :D Should be tmp
         }
 
         Button {
