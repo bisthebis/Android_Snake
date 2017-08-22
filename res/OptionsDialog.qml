@@ -9,7 +9,6 @@ Item {
     property int speed: speed_spinbox.value
 
     visible: false
-    focus: visible //Get focus only when options are shown
     Keys.onReleased: {
         if (event.key === Qt.Key_Back || event.key === Qt.Key_Backspace) {
             rect.visible = false

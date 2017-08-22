@@ -40,11 +40,23 @@ Window {
         id: keyboard_input
         focus: true
 
+        Component.onCompleted: {
+            forceActiveFocus()
+        }
+
         //Android specific
         Keys.onReleased: {
             if (event.key === Qt.Key_Back || event.key === Qt.Key_Backspace) {
-                console.log("No return allowed !")
+                if (options.visible)
+                {
+                    options.visible = false
+                }
+                else if (ui.visible)
+                {
+                    menu.visible = true
+                }
                 event.accepted = true
+
             }
         }
     }
