@@ -39,6 +39,7 @@ void GameGrid::newGame() {
 
     //cleanup
     data.clear();
+    setDirection(RIGHT);
 
     auto gridSize = m_width * m_height;
     for (int i = 0; i < gridSize; ++i) {
