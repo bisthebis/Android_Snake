@@ -8,6 +8,9 @@ Item {
     property alias gameArray: gameArray_internal
     property int cellSize: gameReference.cellSize
 
+    SwipableArea {
+        onSwipeDone: gameReference.setDirection(direction)
+    }
 
     //Game widget
     BackgroundArray {

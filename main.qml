@@ -13,12 +13,24 @@ Window {
     width: 640
     height: 480
     title: qsTr("Snake")
-    onWidthChanged: updateCellSize();
-    onHeightChanged: updateCellSize();
+
+
+    property int cellSize: 32
+    property int score: 6 * game.snakeSize
 
     Component.onCompleted: {
         updateCellSize()
     }
+
+    onWidthChanged: updateCellSize();
+    onHeightChanged: updateCellSize();
+
+    function updateCellSize() {
+        var maxWidth = 0.8 * window.width / game.width
+        var maxHeight = 0.8 * window.height / game.height
+        cellSize = Math.max(Math.min(maxWidth, maxHeight), 8)
+    }
+
 
     onScoreChanged: game_data.setHighscore(Math.max(score, game_data.highscore))
 
@@ -35,19 +47,7 @@ Window {
         }
     }
 
-    function updateCellSize() {
-        var maxWidth = 0.8 * window.width / game.width
-        var maxHeight = 0.8 * window.height / game.height
-        cellSize = Math.max(Math.min(maxWidth, maxHeight), 8)
-    }
 
-
-    property int cellSize: 32
-    property int score: 6 * game.snakeSize
-
-    SwipableArea {
-        onSwipeDone: game.setDirection(direction)
-    }
 
     //Game data
     GameGrid {
