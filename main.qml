@@ -16,7 +16,9 @@ Window {
     onWidthChanged: updateCellSize();
     onHeightChanged: updateCellSize();
 
-
+    Component.onCompleted: {
+        updateCellSize()
+    }
 
     onScoreChanged: game_data.setHighscore(Math.max(score, game_data.highscore))
 
@@ -34,8 +36,8 @@ Window {
     }
 
     function updateCellSize() {
-        var maxWidth = 0.8 * width / game.width
-        var maxHeight = 0.8 * height / game.heigth
+        var maxWidth = 0.8 * window.width / game.width
+        var maxHeight = 0.8 * window.height / game.height
         cellSize = Math.max(Math.min(maxWidth, maxHeight), 8)
     }
 
@@ -54,6 +56,7 @@ Window {
         onFailedDirectionSwitch: console.log("Failed to go backwards")
         property bool gameRunning: timer.running
         property int cellSize: window.cellSize
+        onNewGameStarted: updateCellSize();
         onChanged: {
             ui.gameArray.draw(this)
         }

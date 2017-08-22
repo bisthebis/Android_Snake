@@ -125,6 +125,7 @@ public slots:
 signals:
     void widthChanged(int width);
     void heightChanged(int height);
+    void newGameStarted();
 
     /**
      * @brief emitted when data changes. Parameter is the ID of the cell changed, -1 if more than one changed.

@@ -6,15 +6,17 @@ Item {
 
     property var gameReference: null
     property alias gameArray: gameArray_internal
-    property int cellSize: gameReference.cellSize | 32
+    property int cellSize: gameReference.cellSize
 
 
     //Game widget
     BackgroundArray {
         anchors.centerIn: parent
         id: gameArray_internal
+        array_width: gameReference.width
+        array_height: gameReference.height
         cell_width: cellSize
-        cell_height: cell_height
+        cell_height: cellSize
     }
 
 
@@ -31,7 +33,7 @@ Item {
 
         Button {
             text: qsTr("Restart")
-            onClicked: gameReference.width += 0 //Strange way to restart :D Should be tmp
+            onClicked: gameReference.width += 1 //Strange way to restart :D Should be tmp
         }
 
         Button {

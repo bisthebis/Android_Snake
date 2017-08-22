@@ -79,6 +79,7 @@ Item {
         }
 
         function getElement(x, y) {
+            console.log(cell_width + "; " + cell_height)
             console.assert(x >= 0 && x <= array_width)
             console.assert(y >= 0 && y <= array_height)
             var key = x + array_width * y

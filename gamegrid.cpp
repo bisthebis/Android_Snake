@@ -49,6 +49,8 @@ void GameGrid::newGame() {
 
     initSnake();
     addFood();
+
+    emit newGameStarted();
 }
 
 GameGrid::CELL_STATE GameGrid::at(int x, int y) const {
