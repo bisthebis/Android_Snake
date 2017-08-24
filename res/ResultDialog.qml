@@ -6,12 +6,11 @@ Dialog {
 
     title: "Game Over"
     modal: true
-    width: parent.width / 2
-    height: parent.height / 2
+
     x: (parent.width - width) / 2
     y: (parent.height - height) / 2
 
-    contentItem: Text {
+    contentItem: TextArea {
         color: "navy"
         text: qsTr("Your snake was %1 cells long").arg(snakeSize)
     }
