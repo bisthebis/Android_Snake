@@ -40,7 +40,7 @@ Window {
         id: resultDialog
         width: window.width / 2
         snakeSize: game.snakeSize
-        visible: true
+        visible: false
         onVisibleChanged: {
             if (visible) {
                 scoreTimer.restart()
