@@ -21,38 +21,30 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-#include <QGuiApplication>
-#include <QQmlApplicationEngine>
-#include <QtGlobal>
-#include <QTime>
-#include <QDebug>
-#include <QMap>
-#include <QTextStream>
-#include <QQmlContext>
-#include "gamegrid.h"
-#include "gamedata.h"
-#include "filereader.h"
+#ifndef FILEREADER_H
+#define FILEREADER_H
 
+#include <QObject>
+#include <QString>
 
-int main(int argc, char *argv[])
+class FileReader : public QObject
 {
-    qsrand(QTime::currentTime().msec());
-    QGuiApplication app(argc, argv);
+    Q_OBJECT
 
-    QQmlApplicationEngine engine;
+    Q_PROPERTY(QString fileContent READ content NOTIFY textLoaded)
+public:
+    explicit FileReader(QObject *parent = nullptr);
 
-    qmlRegisterType<FileReader>("be.martin.boris", 1, 0, "FileReader");
-    qmlRegisterType<GameGrid>("be.martin.boris", 1, 0, "GameGrid");
-    qmlRegisterType<GameData>("be.martin.boris", 1, 0, "GameData");
+signals:
+    void textLoaded();
+    void failure();
 
-    //Register data
-    GameData data;
-    engine.rootContext()->setContextProperty("game_data", &data);
+public slots:
+    void loadFile(QString path);
+    QString content() const;
 
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+private:
+    QString cache;
+};
 
-    if (engine.rootObjects().isEmpty())
-        return -1;
-
-    return app.exec();
-}
+#endif // FILEREADER_H

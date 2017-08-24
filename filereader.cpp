@@ -21,38 +21,26 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-#include <QGuiApplication>
-#include <QQmlApplicationEngine>
-#include <QtGlobal>
-#include <QTime>
-#include <QDebug>
-#include <QMap>
-#include <QTextStream>
-#include <QQmlContext>
-#include "gamegrid.h"
-#include "gamedata.h"
 #include "filereader.h"
+#include <QFile>
 
 
-int main(int argc, char *argv[])
+FileReader::FileReader(QObject *parent) : QObject(parent)
 {
-    qsrand(QTime::currentTime().msec());
-    QGuiApplication app(argc, argv);
 
-    QQmlApplicationEngine engine;
+}
 
-    qmlRegisterType<FileReader>("be.martin.boris", 1, 0, "FileReader");
-    qmlRegisterType<GameGrid>("be.martin.boris", 1, 0, "GameGrid");
-    qmlRegisterType<GameData>("be.martin.boris", 1, 0, "GameData");
+void FileReader::loadFile(QString path) {
+    QFile file(path);
+    if (!file.open(QFile::ReadOnly)) {
+        emit failure();
+        return;
+    }
 
-    //Register data
-    GameData data;
-    engine.rootContext()->setContextProperty("game_data", &data);
+    QByteArray data = file.readAll();
+    cache = QString::fromLatin1(data);
+}
 
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-
-    if (engine.rootObjects().isEmpty())
-        return -1;
-
-    return app.exec();
+QString FileReader::content() const {
+    return cache;
 }

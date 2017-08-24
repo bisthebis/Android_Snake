@@ -14,5 +14,6 @@
         <file>res/MainMenu.qml</file>
         <file>res/ResultDialog.qml</file>
         <file>res/AboutDialog.qml</file>
+        <file>res/aboutContent.html</file>
     </qresource>
 </RCC>
