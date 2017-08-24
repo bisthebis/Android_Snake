@@ -40,9 +40,6 @@ Window {
         id: keyboard_input
         focus: true
 
-        Component.onCompleted: {
-            forceActiveFocus()
-        }
 
         //Android specific
         Keys.onReleased: {
@@ -50,11 +47,17 @@ Window {
                 if (options.visible)
                 {
                     options.visible = false
+                    console.log("Hiding options")
                 }
                 else if (ui.visible)
                 {
                     menu.visible = true
+                    console.log("Leaving game through back key")
                 }
+                else {
+                    console.log("KeyPressed during menu. That's pretty dumb")
+                }
+
                 event.accepted = true
 
             }
@@ -70,7 +73,11 @@ Window {
         onFailedDirectionSwitch: console.log("Failed to go backwards")
         property bool gameRunning: timer.running
         property int cellSize: window.cellSize
-        onNewGameStarted: updateCellSize();
+        onNewGameStarted: {
+            updateCellSize();
+            keyboard_input.focus = true;
+        }
+
         onChanged: {
             ui.gameArray.draw(this)
         }
