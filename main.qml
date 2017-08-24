@@ -55,6 +55,13 @@ Window {
         }
     }
 
+    AboutDialog {
+        id: about
+        visible: false
+        width: window.width / 2
+        height: window.height / 2
+    }
+
     Item {
         id: keyboard_input
         focus: true
@@ -137,6 +144,8 @@ Window {
         onOptionsAsked: {
             options.visible = !options.visible
         }
+
+        onAboutAsked: about.visible = true
     }
 
     //Options dialog

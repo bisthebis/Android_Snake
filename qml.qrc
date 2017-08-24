@@ -13,5 +13,6 @@
         <file>res/GameUI.qml</file>
         <file>res/MainMenu.qml</file>
         <file>res/ResultDialog.qml</file>
+        <file>res/AboutDialog.qml</file>
     </qresource>
 </RCC>

@@ -7,6 +7,7 @@ Item {
     id: menu
     property var gameReference
     signal optionsAsked()
+    signal aboutAsked()
 
     ColumnLayout {
         anchors.centerIn: parent
@@ -35,6 +36,7 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             text: qsTr("About")
+            onClicked: aboutAsked()
         }
     }
 }
