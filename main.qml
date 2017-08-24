@@ -47,6 +47,7 @@ Window {
                 if (options.visible)
                 {
                     options.visible = false
+                    timer.running = true
                     console.log("Hiding options")
                 }
                 else if (ui.visible)
@@ -55,7 +56,8 @@ Window {
                     console.log("Leaving game through back key")
                 }
                 else {
-                    console.log("KeyPressed during menu. That's pretty dumb")
+                    console.log("KeyPressed during menu. leaving the game")
+                    Qt.quit()
                 }
 
                 event.accepted = true
