@@ -6,6 +6,7 @@ Item {
     anchors.fill: parent
     id: menu
     property var gameReference
+    signal optionsAsked()
 
     ColumnLayout {
         anchors.centerIn: parent
@@ -27,6 +28,7 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             text: qsTr("Options")
+            onClicked: optionsAsked()
         }
 
         Button {

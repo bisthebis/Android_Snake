@@ -66,7 +66,8 @@ Window {
                 if (options.visible)
                 {
                     options.visible = false
-                    timer.running = true
+                    if (ui.visible) //If accessed from game, restart it. But not if accessed from menu
+                        timer.running = true
                     console.log("Hiding options")
                 }
                 else if (ui.visible)
@@ -132,6 +133,10 @@ Window {
         id: menu
         gameReference: game
         visible: true
+
+        onOptionsAsked: {
+            options.visible = !options.visible
+        }
     }
 
     //Options dialog
