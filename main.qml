@@ -36,6 +36,25 @@ Window {
 
     onScoreChanged: game_data.setHighscore(Math.max(score, game_data.highscore))
 
+    ResultDialog {
+        id: resultDialog
+        width: window.width / 2
+        snakeSize: game.snakeSize
+        visible: true
+        onVisibleChanged: {
+            if (visible) {
+                scoreTimer.restart()
+            }
+        }
+
+        Timer {
+            id: scoreTimer
+            interval: 3000
+            repeat: false
+            onTriggered: resultDialog.visible = false
+        }
+    }
+
     Item {
         id: keyboard_input
         focus: true
@@ -71,7 +90,12 @@ Window {
     //Game data
     GameGrid {
         id: game
-        onLost: menu.visible = true //Go back to menu
+        onLost: {
+            //Show score then go back to menu
+            resultDialog.visible = true
+            menu.visible = true
+        }
+
         onFailedDirectionSwitch: console.log("Failed to go backwards")
         property bool gameRunning: timer.running
         property int cellSize: window.cellSize
