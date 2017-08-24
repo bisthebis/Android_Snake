@@ -92,6 +92,8 @@ Window {
         id: game
         onLost: {
             //Show score then go back to menu
+            console.log("Defeat")
+            timer.stop()
             resultDialog.visible = true
             menu.visible = true
         }
