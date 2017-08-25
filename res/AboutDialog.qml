@@ -22,6 +22,7 @@ Dialog {
             wrapMode: Text.Wrap
             color: "navy"
             text: "Text hasn't been loaded."
+            onLinkActivated: Qt.openUrlExternally(link)
             Component.onCompleted: getAboutContent()
             }
     }
