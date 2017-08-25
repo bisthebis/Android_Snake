@@ -8,17 +8,17 @@ Dialog {
     modal: true
     id: dialog
 
-    x: (parent.width - width) / 2
-    y: (parent.height - height) / 2
+    x: (parent.width - width) * 0.6
+    y: (parent.height - height) * 0.6
 
     contentItem: Flickable {
-        width: dialog.width
+        width: dialog.width * 0.8
         contentHeight: content.height
         boundsBehavior: Flickable.DragAndOvershootBounds
         clip: true
         Text {
             id: content
-            width: dialog.width
+            width: dialog.width * 0.8
             wrapMode: Text.Wrap
             color: "navy"
             text: "Text hasn't been loaded."
