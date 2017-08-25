@@ -38,12 +38,6 @@ Item {
             }
         }
 
-        RowLayout {
-            Label {
-                text: qsTr("Size : ")
-            }
-        }
-
         Button {
             text: qsTr("Done")
             onClicked: rect.visible = false
