@@ -21,7 +21,7 @@ Dialog {
             width: dialog.width
             wrapMode: Text.Wrap
             color: "navy"
-            text: "Error"
+            text: "Text hasn't been loaded."
             Component.onCompleted: getAboutContent()
             }
     }
@@ -30,7 +30,10 @@ Dialog {
 
     FileReader {
         id: reader
-        onFailure: content.text = "Failed to load"
+        onFailure: {
+            content.text = "Failed to load : " + err
+        }
+
         onTextLoaded: content.text = fileContent;
     }
 

@@ -33,12 +33,13 @@ FileReader::FileReader(QObject *parent) : QObject(parent)
 void FileReader::loadFile(QString path) {
     QFile file(path);
     if (!file.open(QFile::ReadOnly)) {
-        emit failure();
+        emit failure(file.errorString());
         return;
     }
 
     QByteArray data = file.readAll();
     cache = QString::fromLatin1(data);
+    emit textLoaded();
 }
 
 QString FileReader::content() const {

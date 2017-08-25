@@ -37,7 +37,7 @@ public:
 
 signals:
     void textLoaded();
-    void failure();
+    void failure(QString err);
 
 public slots:
     void loadFile(QString path);
